@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612241680155",
+    "project_id": "admin-puries-food-delivery",
+    "storage_bucket": "admin-puries-food-delivery.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612241680155:android:483d31e95293c1307195be",
+        "android_client_info": {
+          "package_name": "com.example.adminpuriesfooddelivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUXVwJj4PcCXXy_YxRcwV6ndX_IsaZZzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
