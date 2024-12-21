@@ -6,8 +6,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.adminpuriesfooddelivery.adapter.MenuItemAdapter
-import com.example.adminpuriesfooddelivery.databinding.ActivityAllItemBinding
 import com.example.adminpuriesfooddelivery.model.AllMenu
+import com.example.adminpuriesfooddelivery.databinding.ActivityAllItemBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -26,10 +26,6 @@ class AllItemActivity : AppCompatActivity() {
         setContentView(binding.root)
         databaseReference = FirebaseDatabase.getInstance().reference
         retriveMenuItem()
-
-
-
-
 
         binding.backButton.setOnClickListener {
             finish()

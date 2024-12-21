@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AdminPuriesFoodDelivery"
         tools:targetApi="31">
         <activity
+            android:name=".OrdersDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".PendingOrderActivity"
             android:exported="false" />
         <activity

@@ -1,22 +1,24 @@
 package com.example.adminpuriesfooddelivery
 
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import com.google.firebase.firestore.FirebaseFirestore
+import android.widget.Toast
+import com.example.adminpuriesfooddelivery.model.AllMenu
 import com.example.adminpuriesfooddelivery.databinding.ActivityAddItemBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class AddItemActivity : AppCompatActivity() {
 
-    private val db = FirebaseFirestore.getInstance()
+    // Food item details
+    private lateinit var foodName: String
+    private lateinit var foodPrice: String
+    private lateinit var foodDescription: String
+    private lateinit var foodIngredient: String
+
+    // Firebase
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
 
     private val binding: ActivityAddItemBinding by lazy {
         ActivityAddItemBinding.inflate(layoutInflater)
@@ -26,47 +28,24 @@ class AddItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance()
+
         binding.addItemButton.setOnClickListener {
-            val itemName = binding.enterFoodName.text.toString()
-            val itemDescription = binding.description.text.toString()
-            val itemPriceString = binding.enterFoodPrice.text.toString()
-            val ingredients = binding.ingredients.text.toString()
+            // Get data from fields
+            foodName = binding.enterFoodName.text.toString().trim()
+            foodPrice = binding.enterFoodPrice.text.toString().trim()
+            foodDescription = binding.description.text.toString().trim()
+            foodIngredient = binding.ingredients.text.toString().trim()
 
-            // Check if price is a valid number
-            val itemPrice = try {
-                itemPriceString.toDouble()
-            } catch (e: NumberFormatException) {
-                0.0 // Set default value or show error
-            }
-
-            if (itemName.isNotEmpty() && itemDescription.isNotEmpty() && itemPrice > 0 && ingredients.isNotEmpty()) {
-                val itemData = hashMapOf(
-                    "name" to itemName,
-                    "description" to itemDescription,
-                    "price" to itemPrice,
-                    "ingredients" to ingredients, // Ingredients added here
-                    "imagePath" to "internal_storage_path_to_image.jpg" // Store the internal file path here
-                )
-
-                // Add the item data to Firestore
-                db.collection("items")
-                    .add(itemData)
-                    .addOnSuccessListener {
-                        // Handle success (e.g., show a success message)
-                        println("Item added successfully")
-                    }
-                    .addOnFailureListener { e ->
-                        // Handle failure (e.g., show an error message)
-                        println("Error adding item: ${e.message}")
-                    }
+            if (foodName.isNotBlank() && foodPrice.isNotBlank() && foodDescription.isNotBlank() && foodIngredient.isNotBlank()) {
+                uploadData()
+                Toast.makeText(this, "Data Uploaded Successfully", Toast.LENGTH_SHORT).show()
+                finish()
             } else {
-                // Handle missing fields (e.g., show error messages)
-                println("Please fill all fields correctly")
+                Toast.makeText(this, "Fill all the Details", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        binding.selectImage.setOnClickListener {
-            pickImage.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
         binding.backButton.setOnClickListener {
@@ -74,33 +53,26 @@ class AddItemActivity : AppCompatActivity() {
         }
     }
 
-    val pickImage = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            // Display the image in the ImageView
-            binding.selectedImage.setImageURI(uri)
+    private fun uploadData() {
+        // Get a reference to the menu node in the database
+        val menuRef = database.getReference("menu")
 
-            // Save the image to internal storage
-            try {
-                val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
-                val savedFile = saveImageToInternalStorage(bitmap)
-                // Optionally, store the saved file path for use later
-            } catch (e: IOException) {
-                e.printStackTrace()
+        // Generate a unique key for the new menu item
+        val newItemKey = menuRef.push().key
+
+        val newItem = AllMenu(
+            foodName = foodName,
+            foodPrice = foodPrice,
+            foodDescription = foodDescription,
+            foodIngredients = foodIngredient
+        )
+
+        newItemKey?.let { key ->
+            menuRef.child(key).setValue(newItem).addOnSuccessListener {
+                Toast.makeText(this, "Data Uploaded successfully", Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(this, "Data Upload failed", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    private fun saveImageToInternalStorage(bitmap: Bitmap): File {
-        // Create a file in the app's internal storage to save the image
-        val directory = filesDir
-        val imageFile = File(directory, "item_image_${System.currentTimeMillis()}.jpg")
-
-        // Save the bitmap as a JPEG file
-        val fileOutputStream = FileOutputStream(imageFile)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
-        fileOutputStream.flush()
-        fileOutputStream.close()
-
-        return imageFile
     }
 }

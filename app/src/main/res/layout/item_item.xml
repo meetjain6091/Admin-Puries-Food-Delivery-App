@@ -34,14 +34,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:src="@drawable/menu3" />
 
             <TextView
                 android:id="@+id/foodNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:fontFamily="@font/yeon_sung"
+                android:fontFamily="@font/lato_regular"
                 android:textSize="16sp"
                 android:text="TextView"
                 app:layout_constraintBottom_toTopOf="@+id/fooditemPrice"

@@ -33,7 +33,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:src="@drawable/menu3" />
 
             <TextView
                 android:id="@+id/customerName"
@@ -55,7 +55,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="12dp"
                 android:fontFamily="@font/yeon_sung"
-                android:text="Quantity"
+                android:text="Total Amount"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/pendingOrderQuantity"
