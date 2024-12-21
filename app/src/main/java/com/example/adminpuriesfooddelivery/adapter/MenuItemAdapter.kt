@@ -11,7 +11,8 @@ import com.google.firebase.database.DatabaseReference
 class MenuItemAdapter(
     private val context: Context,
     private val menuList: ArrayList<AllMenu>,
-    databaseReference: DatabaseReference
+    databaseReference: DatabaseReference,
+    private val oonDeleteClickListener : (position : Int) -> Unit
 ) :
     RecyclerView.Adapter<MenuItemAdapter.AddItemViewHolder>() {
 
@@ -51,10 +52,14 @@ class MenuItemAdapter(
                 binding.deleteButton.setOnClickListener {
                     val itemPosition = adapterPosition
                     if (itemPosition != RecyclerView.NO_POSITION) {
-                        deleteItem(itemPosition)
+                        onDeleteClickListener(position)
                     }
                 }
             }
+        }
+
+        private fun onDeleteClickListener(position: Int){
+
         }
 
         private fun increaseQuantity(position: Int) {

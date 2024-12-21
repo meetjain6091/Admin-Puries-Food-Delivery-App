@@ -94,13 +94,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/pendingNoOfOrders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
 
                 android:fontFamily="@font/lato_bold"
-                android:text="80"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -133,12 +133,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/completedOrders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/lato_bold"
-                android:text="30"
+                android:text="0"
                 android:textColor="#FFC107"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -172,12 +172,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/wholeTimeEarning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/lato_bold"
-                android:text="30"
+                android:text="0"
                 android:textColor="#4CAF50"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -415,10 +415,10 @@
         app:layout_constraintTop_toTopOf="@+id/cardView6">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/logoutBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/cardgreen"
-            >
+            android:background="@drawable/cardgreen">
 
             <ImageView
                 android:id="@+id/imageView13"

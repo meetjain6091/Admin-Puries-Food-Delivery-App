@@ -3,6 +3,7 @@ package com.example.adminpuriesfooddelivery
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.adminpuriesfooddelivery.adapter.MenuItemAdapter
@@ -56,8 +57,26 @@ class AllItemActivity : AppCompatActivity() {
         })
     }
     private fun setAdapter(){
-        val adapter= MenuItemAdapter(this@AllItemActivity,menuItems,databaseReference)
+
+        val adapter= MenuItemAdapter(this@AllItemActivity,menuItems,databaseReference){position->
+            deleteMenuItem(position)
+        }
         binding.menuRecyclerView.layoutManager= LinearLayoutManager(this)
         binding.menuRecyclerView.adapter=adapter
+    }
+
+    private fun deleteMenuItem(position : Int){
+        val menuItemToDelete = menuItems[position]
+        val menuItemKey = menuItemToDelete.key
+        val foodMenuref = database.reference.child("menu").child(menuItemKey!!)
+        foodMenuref.removeValue().addOnCompleteListener(){
+            task->
+            if(task.isSuccessful){
+                menuItems.removeAt(position)
+                binding.menuRecyclerView.adapter?.notifyItemRemoved(position)
+            }else{
+                Toast.makeText(this,"Item Not Deleted",Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

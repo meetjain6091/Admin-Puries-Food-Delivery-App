@@ -61,6 +61,7 @@ class AddItemActivity : AppCompatActivity() {
         val newItemKey = menuRef.push().key
 
         val newItem = AllMenu(
+            newItemKey,
             foodName = foodName,
             foodPrice = foodPrice,
             foodDescription = foodDescription,

@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/completedOrders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/wholeTimeEarning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/merriweathersans_bold"
@@ -37,9 +37,9 @@
         android:textAlignment="center"
         android:textColor="@color/design"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView13"
-        app:layout_constraintStart_toStartOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        app:layout_constraintEnd_toEndOf="@+id/completedOrders"
+        app:layout_constraintStart_toStartOf="@+id/completedOrders"
+        app:layout_constraintTop_toBottomOf="@+id/completedOrders" />
 
     <TextView
         android:id="@+id/chooseLocationTextView"
@@ -50,7 +50,7 @@
         android:textColor="@color/design"
         android:layout_marginStart="49dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/wholeTimeEarning" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputEditText"

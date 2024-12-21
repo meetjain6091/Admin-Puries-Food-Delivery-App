@@ -52,7 +52,7 @@
             android:paddingVertical="@dimen/space_s">
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/pendingNoOfOrders"
                 android:layout_width="@dimen/short_title_spacing"
                 android:layout_height="wrap_content"
                 android:text="@string/concise_name"
@@ -103,7 +103,7 @@
             android:paddingVertical="@dimen/space_s">
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/wholeTimeEarning"
                 android:layout_width="@dimen/short_title_spacing"
                 android:layout_height="wrap_content"
                 android:text="@string/concise_phone"
