@@ -35,16 +35,16 @@ class OrdersDetailActivity : AppCompatActivity() {
 
     private fun getDataFromIntent() {
         val receivedOrderdetails =
-        intent.getSerializableExtra("UserOrderdetails") as OrdersModel
+        intent.getSerializableExtra("UserOrderDetails") as OrdersModel
         receivedOrderdetails?.let { orderDetails->
 
-                userName = receivedOrderdetails.userName
-                foodName = receivedOrderdetails.foodNames as ArrayList<String>
-                foodQuantity = receivedOrderdetails.foodQuantities as ArrayList<String>
-                foodPrice = receivedOrderdetails.foodPrices as ArrayList<String>
+                userName = receivedOrderdetails.username
+                foodName = receivedOrderdetails.foodnames as ArrayList<String>
+                foodQuantity = receivedOrderdetails.foodquantitys as ArrayList<String>
+                foodPrice = receivedOrderdetails.foodprices as ArrayList<String>
                 userAddress = receivedOrderdetails.address
-                userPhone = receivedOrderdetails.phone
-                totalPrice = receivedOrderdetails.totalPrice
+                userPhone = receivedOrderdetails.phonenumber
+                totalPrice = receivedOrderdetails.totalprice
 
                 setOrderDetailsData()
                 setAdapter()

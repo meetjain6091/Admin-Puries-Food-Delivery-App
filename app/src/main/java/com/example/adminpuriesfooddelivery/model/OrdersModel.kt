@@ -4,52 +4,50 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.io.Serializable
 
-class OrdersModel(
-    var userId: String? = null,
-    var userName: String? = null,
-    var foodNames: MutableList<String>? = null,
-    var foodPrices: MutableList<String>? = null,
-    var foodQuantities: MutableList<String>? = null,
-    var totalPrice: String? = null,
+data class OrdersModel(
+    var useruid: String? = null,
+    var username: String? = null,
+    var foodnames: MutableList<String>? = null,
+    var foodprices: MutableList<String>? = null,
+    var foodquantitys: MutableList<String>? = null,
+    var totalprice: String? = null,
     var address: String? = null,
-    var phone: String? = null,
-    var orderAccepted: Boolean = false,
-    var paymentReceived: Boolean = false,
-    var itemPushKey: String? = null,
-    var currentTime: Long? = null
-) :  Serializable {
+    var phonenumber: String? = null,
+    var orderisAccepted: Boolean = false,
+    var paymentisReceived: Boolean = false,
+    var itempushkey: String? = null,
+) : Serializable, Parcelable {
 
     constructor(parcel: Parcel) : this(
-        userId = parcel.readString(),
-        userName = parcel.readString(),
-        foodNames = parcel.createStringArrayList()?.toMutableList(),
-        foodPrices = parcel.createStringArrayList()?.toMutableList(),
-        foodQuantities = parcel.createStringArrayList()?.toMutableList(),
-        totalPrice = parcel.readString(),
+        useruid = parcel.readString(),
+        username = parcel.readString(),
+        foodnames = parcel.createStringArrayList()?.toMutableList(),
+        foodprices = parcel.createStringArrayList()?.toMutableList(),
+        foodquantitys = parcel.createStringArrayList()?.toMutableList(),
+        totalprice = parcel.readString(),
         address = parcel.readString(),
-        phone = parcel.readString(),
-        orderAccepted = parcel.readByte() != 0.toByte(),
-        paymentReceived = parcel.readByte() != 0.toByte(),
-        itemPushKey = parcel.readString(),
-        currentTime = parcel.readValue(Long::class.java.classLoader) as? Long
+        phonenumber = parcel.readString(),
+        orderisAccepted = parcel.readByte() != 0.toByte(),
+        paymentisReceived = parcel.readByte() != 0.toByte(),
+        itempushkey = parcel.readString(),
     )
 
-     fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(userId)
-        parcel.writeString(userName)
-        parcel.writeStringList(foodNames)
-        parcel.writeStringList(foodPrices)
-        parcel.writeStringList(foodQuantities)
-        parcel.writeString(totalPrice)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(useruid)
+        parcel.writeString(username) // Corrected the duplicate line
+        parcel.writeStringList(foodnames)
+        parcel.writeStringList(foodprices)
+        parcel.writeStringList(foodquantitys)
+        parcel.writeString(totalprice)
         parcel.writeString(address)
-        parcel.writeString(phone)
-        parcel.writeByte(if (orderAccepted) 1 else 0)
-        parcel.writeByte(if (paymentReceived) 1 else 0)
-        parcel.writeString(itemPushKey)
-        parcel.writeValue(currentTime)
+        parcel.writeString(phonenumber)
+        parcel.writeByte(if (orderisAccepted) 1 else 0)
+        parcel.writeByte(if (paymentisReceived) 1 else 0)
+        parcel.writeString(itempushkey) // Fixed for itemPushKey
+        // Corrected the write value for currentTime
     }
 
-     fun describeContents(): Int = 0
+    override fun describeContents(): Int = 0
 
     companion object CREATOR : Parcelable.Creator<OrdersModel> {
         override fun createFromParcel(parcel: Parcel): OrdersModel = OrdersModel(parcel)

@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val auth = FirebaseAuth.getInstance()
         setContentView(binding.root)
         binding.addMenu.setOnClickListener{
             val intent = Intent(this, AddItemActivity::class.java)
@@ -103,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(order in snapshot.children){
                     var completeOrder = order.getValue(OrdersModel::class.java)
-                    completeOrder?.totalPrice?.replace("₹","")?.toIntOrNull()
+                    completeOrder?.totalprice?.replace("₹","")?.toIntOrNull()
                         ?.let {
                             i->
                             listOfTotalPay.add(i)

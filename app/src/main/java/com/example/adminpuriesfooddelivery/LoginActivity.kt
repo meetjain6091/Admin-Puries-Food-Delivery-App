@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
         val userID = user.uid
         val userData = UserModel(userName, nameOfRestaurant, email, password)
 
-        database.child("users").child(userID).setValue(userData)
+        database.child("user").child(userID).setValue(user)
     }
 
     /**

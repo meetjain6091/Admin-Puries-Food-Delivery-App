@@ -1,6 +1,7 @@
 package com.example.adminpuriesfooddelivery
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.adminpuriesfooddelivery.adapter.DeliveryAdapter
@@ -22,47 +23,74 @@ class OutForDeliveryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        Log.d("OutForDeliveryActivity", "Activity created. Initializing components.")
+
         binding.backButton.setOnClickListener {
+            Log.d("OutForDeliveryActivity", "Back button clicked. Finishing activity.")
             finish()
         }
+
         retrieveCompleteOrderDetails()
-
-
     }
 
     private fun retrieveCompleteOrderDetails() {
+        Log.d("OutForDeliveryActivity", "Starting to retrieve complete order details.")
+
         database = FirebaseDatabase.getInstance()
         val completeOrderRef = database.reference.child("CompleteOrder").orderByChild("currentTime")
+
         completeOrderRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("OutForDeliveryActivity", "onDataChange triggered. Snapshot exists: ${snapshot.exists()}. Children count: ${snapshot.childrenCount}")
+
                 listOfCompleteOrderList.clear()
+
                 for (orderSnapshot in snapshot.children) {
-                    val completeOrder = orderSnapshot.getValue(OrdersModel::class.java) // Use the correct model class
-                    completeOrder?.let {
-                        listOfCompleteOrderList.add(it)
+                    val completeOrder = orderSnapshot.getValue(OrdersModel::class.java)
+
+                    if (completeOrder != null) {
+                        listOfCompleteOrderList.add(completeOrder)
+                        Log.d("OutForDeliveryActivity", "Order added: $completeOrder")
+                    } else {
+                        Log.e("OutForDeliveryActivity", "CompleteOrder is null for snapshot: $orderSnapshot")
                     }
-                    listOfCompleteOrderList.reverse()
-                    setDataintoRecyclerView()
                 }
+
+                listOfCompleteOrderList.reverse()
+                Log.d("OutForDeliveryActivity", "Order list after reverse: $listOfCompleteOrderList")
+
+                setDataIntoRecyclerView()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle the error
+                Log.e("OutForDeliveryActivity", "Error retrieving data: ${error.message}")
             }
         })
     }
-    private fun setDataintoRecyclerView(){
-        val customername  = mutableListOf<String>()
-        val moneyStatus  = mutableListOf<Boolean>()
 
-        for(order in listOfCompleteOrderList){
-            order.userName?.let{
-                customername.add(it)
+    private fun setDataIntoRecyclerView() {
+        Log.d("OutForDeliveryActivity", "Setting data into RecyclerView.")
+
+        val customerName = mutableListOf<String>()
+        val moneyStatus = mutableListOf<Boolean>()
+
+        for (order in listOfCompleteOrderList) {
+            order.username?.let {
+                customerName.add(it)
+                Log.d("OutForDeliveryActivity", "Customer name added: $it")
             }
-            moneyStatus.add(order.paymentReceived)
+            moneyStatus.add(order.paymentisReceived)
+            Log.d("OutForDeliveryActivity", "Money status added: ${order.paymentisReceived}")
         }
-        val adapter = DeliveryAdapter(customername,moneyStatus) // Ensure this adapter matches your OrdersModel
+
+        Log.d("OutForDeliveryActivity", "Final customer names: $customerName")
+        Log.d("OutForDeliveryActivity", "Final money statuses: $moneyStatus")
+
+        val adapter = DeliveryAdapter(customerName, moneyStatus) // Ensure this adapter matches your OrdersModel
         binding.deliveryRecyclerView.adapter = adapter
         binding.deliveryRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        Log.d("OutForDeliveryActivity", "RecyclerView setup complete.")
     }
 }
